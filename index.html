@@ -124,6 +124,8 @@ section{padding-block:clamp(56px,8vw,104px)}
 .item figcaption{padding:12px 14px 14px;display:grid;gap:2px}
 .item figcaption b{font-family:var(--font-display);font-size:1.18rem;font-weight:600;line-height:1.2}
 .item figcaption span{font-size:.78rem;color:var(--muted)}
+.item .note{white-space:pre-line;line-height:1.5;margin-top:2px}
+.item .new{justify-self:start;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff8ee;background:var(--lacquer);padding:2px 7px;margin-bottom:4px}
 .item .size{font-variant-numeric:tabular-nums;color:var(--verdigris);font-weight:500}
 
 
@@ -533,10 +535,10 @@ footer{background:var(--dark);color:var(--on-dark-muted);padding-block:48px 28px
       </div>
       <div>
         <h4>Liên hệ</h4>
-        <ul><li>0782 113 163 (Zalo)</li><li>dangnhuynguyen0096@gmail.com</li><li><a href="https://zalo.me/0782113163" target="_blank" rel="noopener">Nhắn Zalo</a></li></ul>
+        <ul><li>0782 113 163 (Zalo)</li><li>lienhe@noithatcoy.vn</li><li><a href="https://zalo.me/0782113163" target="_blank" rel="noopener">Nhắn Zalo</a></li></ul>
       </div>
     </div>
-    <p class="copy">© 2026 Doanh nghiệp Tư nhân Thiết kế – Tư vấn – Điêu khắc- Nội thất Cổ Ý.</p>
+    <p class="copy">© 2026 Doanh nghiệp Tư nhân Thiết kế – Tư vấn – Điêu khắc Cổ Ý.</p>
   </div>
 </footer>
 
@@ -559,6 +561,29 @@ footer{background:var(--dark);color:var(--on-dark-muted);padding-block:48px 28px
   <div class="lb-bar"><b id="lb-cap"></b><div class="lb-nav"><button type="button" id="lb-prev" aria-label="Ảnh trước">‹</button><button type="button" id="lb-next" aria-label="Ảnh sau">›</button><button type="button" id="lb-close" aria-label="Đóng">✕</button></div></div>
 </div>
 
+<script src="data/san-pham.js"></script>
+<script>
+(function(){
+  /* Sản phẩm thêm bằng công cụ Them-san-pham.html: ảnh ở trên, chữ ở dưới, mới nhất đứng đầu */
+  var list=window.SAN_PHAM||[],g=document.getElementById('gallery');
+  if(!g||!list.length)return;
+  var frag=document.createDocumentFragment(),now=Date.now();
+  list.forEach(function(p){
+    if(!p||!p.anh)return;
+    var f=document.createElement('figure');f.className='item';f.dataset.c=p.danhmuc||'all';
+    var b=document.createElement('button');b.type='button';b.dataset.full='images/'+p.anh+'.jpg';
+    var im=document.createElement('img');im.src='images/'+p.anh+'-sm.jpg';im.alt=p.ten||'Sản phẩm Cổ Ý';im.loading='lazy';
+    b.appendChild(im);f.appendChild(b);
+    var c=document.createElement('figcaption');
+    if(p.ngay&&now-new Date(p.ngay).getTime()<30*864e5){var n=document.createElement('span');n.className='new';n.textContent='Mới';c.appendChild(n)}
+    var t=document.createElement('b');t.textContent=p.ten||'';c.appendChild(t);
+    if(p.kichthuoc){var z=document.createElement('span');z.className='size';z.textContent=p.kichthuoc;c.appendChild(z)}
+    if(p.ghichu){var o=document.createElement('span');o.className='note';o.textContent=p.ghichu;c.appendChild(o)}
+    f.appendChild(c);frag.appendChild(f);
+  });
+  g.insertBefore(frag,g.firstChild);
+})();
+</script>
 <script>
 (function(){
   var burger=document.getElementById('burger'),menu=document.getElementById('menu');
